@@ -1,0 +1,6 @@
+PyQt6
+python-dotenv
+requests
+keyboard
+winrt-Windows.Media.Control
+winrt-Windows.Foundation
