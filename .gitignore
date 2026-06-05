@@ -1,6 +1,13 @@
-﻿venv/
+venv/
 __pycache__/
 .cache
 .env
 *.pyc
 *.pyo
+build/
+dist/
+*.spec
+config.json
+SpotLrc_v.1.0.mp4
+old_main.py
+*.log
