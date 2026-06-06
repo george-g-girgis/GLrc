@@ -32,11 +32,17 @@ python -m venv venv
 .\venv\Scripts\pip install -r requirements.txt
 ```
 
-### 2. Run
+### 2. Run from Source
 
 ```bash
-.\venv\Scripts\python.exe main.py
+.\venv\Scripts\python.exe src\main.py
 ```
+
+### 3. Run Executable (No Python Required)
+
+If you don't want to install Python, you can download the standalone executable:
+1. Grab `GLrc.exe` from the latest release.
+2. Double-click to run!
 
 That's it — no API keys, no authentication, no configuration needed.
 
@@ -55,19 +61,22 @@ That's it — no API keys, no authentication, no configuration needed.
 
 ```
 GLrc/
-├── main.py          # PyQt6 overlay window, tray menu, hotkey filter
-├── engine.py        # WinRT Media integration + background lyrics fetcher
-├── config.py        # Reads/writes configuration state
+├── src/
+│   ├── main.py          # PyQt6 overlay window, tray menu, hotkey filter
+│   ├── lyrics_engine.py # WinRT Media integration + background lyrics fetcher
+│   ├── settings_ui.py   # Settings dashboard and preferences
+│   ├── config.py        # Reads/writes configuration state
+│   └── assets/          # Icons and images
 ├── requirements.txt # Python dependencies
 └── .gitignore
 ```
 
 ### How It Works
 
-1. **`engine.py`** uses `winrt-Windows.Media.Control` to read the currently playing track and position directly from the Windows OS — no Spotify API or Premium required.
+1. **`src/lyrics_engine.py`** uses `winrt-Windows.Media.Control` to read the currently playing track and position directly from the Windows OS — no Spotify API or Premium required.
 2. It queries the [LrcLib API](https://lrclib.net) with the track name, artist, and duration. If exact match fails, it uses search fallback and matches by closest duration.
 3. Lyrics are fetched asynchronously in a background `QThread` (`LyricsFetchWorker`) so the main UI thread never blocks or freezes during network requests.
-4. **`main.py`** runs a 100ms `QTimer` that reads the OS position, interpolates during playback, and displays the matching lyric lines.
+4. **`src/main.py`** runs a 100ms `QTimer` that reads the OS position, interpolates during playback, and displays the matching lyric lines.
 5. Text is rendered using a custom `QPainterPath` for a crisp fill-on-outline aesthetic.
 6. The Windows 11 DWM border is stripped using `DwmSetWindowAttribute` via `ctypes`.
 7. Global hotkeys are captured via an application-level native event filter (`QAbstractNativeEventFilter`) to avoid crashes on Python 3.11+.
