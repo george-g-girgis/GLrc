@@ -26,7 +26,7 @@ A minimalist, transparent lyrics overlay for Windows 11. GLrc reads your current
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/GLrc.git
+git clone https://github.com/george-g-girgis/GLrc.git
 cd GLrc
 python -m venv venv
 .\venv\Scripts\pip install -r requirements.txt
